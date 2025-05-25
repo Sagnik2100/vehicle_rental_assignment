@@ -4,7 +4,12 @@
   "description": "This is a full-stack vehicle rental booking application developed as part of a technical assignment. The application allows users to fill out a dynamic multi-step form to book a vehicle by selecting the vehicle type, model, and rental date range. The backend handles data persistence and validation to ensure that bookings do not overlap.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" : "node index.js",
+    "seed" : "prisma db seed"
+  },
+  "prisma":{
+    "seed":"node prisma/seed.js"
   },
   "repository": {
     "type": "git",
