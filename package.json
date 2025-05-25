@@ -1,0 +1,27 @@
+{
+  "name": "vehicle_rental_assignment",
+  "version": "1.0.0",
+  "description": "This is a full-stack vehicle rental booking application developed as part of a technical assignment. The application allows users to fill out a dynamic multi-step form to book a vehicle by selecting the vehicle type, model, and rental date range. The backend handles data persistence and validation to ensure that bookings do not overlap.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sagnik2100/vehicle_rental_assignment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sagnik2100/vehicle_rental_assignment/issues"
+  },
+  "homepage": "https://github.com/Sagnik2100/vehicle_rental_assignment#readme",
+  "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "prisma": "^6.8.2"
+  }
+}
