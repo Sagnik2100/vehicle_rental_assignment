@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "node index.js",
-    "seed" : "prisma db seed"
+    "dev": "node index.js",
+    "seed": "prisma db seed",
+    "start" : "node src/server.js"
   },
-  "prisma":{
-    "seed":"node prisma/seed.js"
+  "prisma": {
+    "seed": "node prisma/seed.js"
   },
   "repository": {
     "type": "git",
