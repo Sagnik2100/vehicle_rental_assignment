@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { TextField, Button, Typography, Box } from "@mui/material";
+import "../css/DateScreen.css"; // Custom CSS
 
 export default function DateScreen() {
   const navigate = useNavigate();
 
-  const vehicleId = localStorage.getItem("vehicleId");
   const vehicleName = localStorage.getItem("vehicleName");
-
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -25,29 +25,42 @@ export default function DateScreen() {
   };
 
   return (
-    <div>
-      <h2>Select Booking Dates for your {vehicleName || "your vehicle"}</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Start Date: </label>
-          <input
+    <div className="form-container">
+      <Box className="form-box">
+        <Typography variant="h5" gutterBottom>
+          Select Booking Dates for {vehicleName || "your vehicle"}
+        </Typography>
+        <form onSubmit={handleSubmit} noValidate>
+          <TextField
+            label="Start Date"
             type="date"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            margin="normal"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
           />
-        </div>
-
-        <div>
-          <label>End Date: </label>
-          <input
+          <TextField
+            label="End Date"
             type="date"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            margin="normal"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
           />
-        </div>
-
-        <button type="submit">Continue to Review</button>
-      </form>
+          <div className="button-wrapper">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+            >
+              Continue to Review
+            </Button>
+          </div>
+        </form>
+      </Box>
     </div>
   );
 }

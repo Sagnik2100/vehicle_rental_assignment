@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { TextField, Button, Typography, Box } from "@mui/material";
+import "../css/NameScreen.css"; // Import your custom CSS
 
 export default function NameScreen() {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [error, setError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!firstName || !lastName) {
-      alert("Please enter both first and last names.");
+    if (!firstName.trim() || !lastName.trim()) {
+      setError(true);
       return;
     }
 
@@ -22,27 +25,42 @@ export default function NameScreen() {
   };
 
   return (
-    <div>
-      <h2>Enter Your Name</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>First Name: </label>
-          <input
-            type="text"
+    <div className="form-container">
+      <Box className="form-box">
+        <Typography variant="h5" gutterBottom>
+          Enter Your Name
+        </Typography>
+        <form onSubmit={handleSubmit} noValidate>
+          <TextField
+            label="First Name"
+            fullWidth
+            margin="normal"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            error={error && !firstName.trim()}
+            helperText={error && !firstName.trim() ? "First name is required" : ""}
           />
-        </div>
-        <div>
-          <label>Last Name: </label>
-          <input
-            type="text"
+          <TextField
+            label="Last Name"
+            fullWidth
+            margin="normal"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            error={error && !lastName.trim()}
+            helperText={error && !lastName.trim() ? "Last name is required" : ""}
           />
-        </div>
-        <button type="submit">Next</button>
-      </form>
+          <div className="button-wrapper">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="large"
+            >
+              Next
+            </Button>
+          </div>
+        </form>
+      </Box>
     </div>
   );
 }

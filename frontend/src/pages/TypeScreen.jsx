@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Typography, Button, Box } from "@mui/material";
+import "../css/TypeScreen.css"; // Custom CSS
 
 export default function TypeScreen() {
   const [types, setTypes] = useState([]);
   const navigate = useNavigate();
-
-  // 1. Get wheels from localStorage
   const wheels = localStorage.getItem("wheels");
 
-  // 2. Fetch vehicle types on component mount
   useEffect(() => {
     if (!wheels) {
-      navigate("/wheels"); // fallback if user skips wheels selection
+      navigate("/wheels");
       return;
     }
 
@@ -28,7 +27,6 @@ export default function TypeScreen() {
     fetchTypes();
   }, [wheels, navigate]);
 
-  // 3. Handle user selection
   const handleSelectType = (type) => {
     localStorage.setItem("vehicleTypeId", type.id);
     localStorage.setItem("vehicleTypeName", type.name);
@@ -36,23 +34,30 @@ export default function TypeScreen() {
   };
 
   return (
-    <div className="p-6 text-center">
-      <h2 className="text-2xl font-semibold mb-6">Select a vehicle type</h2>
-      <div className="flex justify-center flex-wrap gap-4">
-        {types.length > 0 ? (
-          types.map((type) => (
-            <button
-              key={type.id}
-              onClick={() => handleSelectType(type)}
-              className="bg-purple-500 text-white px-6 py-3 rounded-xl hover:bg-purple-600"
-            >
-              {type.name}
-            </button>
-          ))
-        ) : (
-          <p className="text-gray-600">Loading types...</p>
-        )}
-      </div>
+    <div className="form-container">
+      <Box className="form-box">
+        <Typography variant="h5" gutterBottom>
+          Select a Vehicle Type
+        </Typography>
+
+        <div className="button-grid">
+          {types.length > 0 ? (
+            types.map((type) => (
+              <Button
+                key={type.id}
+                variant="contained"
+                color="primary"
+                onClick={() => handleSelectType(type)}
+                className="type-button"
+              >
+                {type.name}
+              </Button>
+            ))
+          ) : (
+            <Typography color="textSecondary">Loading types...</Typography>
+          )}
+        </div>
+      </Box>
     </div>
   );
 }

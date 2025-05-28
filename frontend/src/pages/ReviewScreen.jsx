@@ -1,11 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import {
+  Typography,
+  Button,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Alert,
+  Snackbar,
+} from "@mui/material";
+import "../css/ReviewScreen.css"; // Custom styles
 
 export default function ReviewScreen() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const firstName = localStorage.getItem("firstName");
   const lastName = localStorage.getItem("lastName");
@@ -19,7 +31,7 @@ export default function ReviewScreen() {
     setError("");
 
     try {
-      const res = await axios.post("http://localhost:8000/api/bookings", {
+      await axios.post("http://localhost:8000/api/bookings", {
         firstName,
         lastName,
         vehicleId: parseInt(vehicleId),
@@ -27,11 +39,12 @@ export default function ReviewScreen() {
         endDate,
       });
 
-      alert("Booking successful!");
+      setOpenSnackbar(true); // Show success snackbar
 
-      // optionally clear storage and redirect
-      localStorage.clear();
-      navigate("/");
+      setTimeout(() => {
+        localStorage.clear();
+        navigate("/");
+      }, 2000);
     } catch (err) {
       setError(err.response?.data?.error || "Failed to create booking.");
     } finally {
@@ -40,21 +53,56 @@ export default function ReviewScreen() {
   };
 
   return (
-    <div>
-      <h2>Review Your Booking</h2>
+    <div className="form-container">
+      <Box className="form-box">
+        <Typography variant="h5" gutterBottom>
+          Review Your Booking
+        </Typography>
 
-      <ul>
-        <li><strong>Name:</strong> {firstName} {lastName}</li>
-        <li><strong>Vehicle:</strong> {vehicleName}</li>
-        <li><strong>Start Date:</strong> {startDate}</li>
-        <li><strong>End Date:</strong> {endDate}</li>
-      </ul>
+        <List>
+          <ListItem>
+            <ListItemText primary="Name" secondary={`${firstName} ${lastName}`} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="Vehicle" secondary={vehicleName} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="Start Date" secondary={startDate} />
+          </ListItem>
+          <ListItem>
+            <ListItemText primary="End Date" secondary={endDate} />
+          </ListItem>
+        </List>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && (
+          <Alert severity="error" sx={{ mt: 2 }}>
+            {error}
+          </Alert>
+        )}
 
-      <button onClick={handleConfirm} disabled={loading}>
-        {loading ? "Booking..." : "Confirm Booking"}
-      </button>
+        <div className="button-wrapper">
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={handleConfirm}
+            disabled={loading}
+          >
+            {loading ? "Booking..." : "Confirm Booking"}
+          </Button>
+        </div>
+      </Box>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity="success" onClose={() => setOpenSnackbar(false)}>
+          Booking successful!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
