@@ -1,10 +1,10 @@
-import AppRouter from './router/AppRouter';
-import './App.css';
+import AppRouter from "../src/router/AppRouter";
+import { FormProvider } from "./context/formContext";
 
-function App() {
+export default function App() {
   return (
-   <AppRouter/>
+    <FormProvider>
+      <AppRouter />
+    </FormProvider>
   );
 }
-
-export default App;
