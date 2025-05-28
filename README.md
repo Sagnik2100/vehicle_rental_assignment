@@ -12,7 +12,6 @@ This is a full-stack vehicle rental booking application developed as part of a t
 ### Frontend
 - **React.js**
 - **Material UI** – For UI components
-- **Tailwind CSS** – For utility-first styling
 
 ### Backend
 - **Node.js** with Express
