@@ -75,9 +75,19 @@ export default function ReviewScreen() {
         </List>
 
         {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
-            {error}
-          </Alert>
+          <>
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {error}
+            </Alert>
+            <Button
+              variant="outlined"
+              color="secondary"
+              sx={{ mt: 2 }}
+              onClick={() => navigate("/")}
+            >
+              Go to Home
+            </Button>
+          </>
         )}
 
         <div className="button-wrapper">
